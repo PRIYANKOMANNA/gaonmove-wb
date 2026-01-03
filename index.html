@@ -5,61 +5,34 @@
   <title>GaonMove WB</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Leaflet Map -->
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-  />
-  <script
-    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
-  </script>
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
 
-<!-- LOGIN SCREEN -->
 <div class="screen active" id="loginScreen">
   <h1>GaonMove WB</h1>
-  <p>Rural logistics, on demand</p>
-
-  <input type="text" placeholder="Enter mobile number" />
+  <input placeholder="Mobile number"/>
   <button onclick="goToRole()">Continue</button>
-
-  <p class="small">Demo mode • No OTP required</p>
 </div>
 
-<!-- ROLE SCREEN -->
 <div class="screen" id="roleScreen">
-  <h2>Continue as</h2>
-
   <button onclick="goToMap()">🚚 Customer</button>
-  <button class="secondary">🧑‍✈️ Transporter</button>
 </div>
 
-<!-- MAP SCREEN -->
 <div class="screen" id="mapScreen">
-  <h2>Select Pickup & Drop</h2>
-
+  <h2>Select Pickup → Drop</h2>
   <div id="map"></div>
-
-  <button onclick="confirmLocations()">Confirm Locations</button>
-
-  <p class="small">
-    Tap once for Pickup, tap again for Drop
-  </p>
+  <p class="small" id="statusText">Tap map to select Pickup</p>
 </div>
 
-<!-- VEHICLE SCREEN -->
 <div class="screen" id="vehicleScreen">
-  <h2>Available Near You</h2>
-
-  <div class="card">🚲 Bike • ₹250 • ETA 30 min</div>
-  <div class="card">🛺 Toto / Auto • ₹450 • ETA 45 min</div>
-  <div class="card">🚐 Pickup Van • ₹1,100 • ETA 1.5 hr</div>
-  <div class="card">🚚 407 Truck • ₹2,200 • ETA 3 hr</div>
-
-  <p class="small">Live map demo • Pricing simulated</p>
+  <h2>Trip Summary</h2>
+  <p id="summary"></p>
+  <div class="card">🚐 Pickup Van • Recommended</div>
 </div>
 
 <script src="script.js"></script>
