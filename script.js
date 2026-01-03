@@ -7,10 +7,15 @@ function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => {
     s.classList.remove('active');
   });
-  document.getElementById(id).classList.add('active');
+
+  const screen = document.getElementById(id);
+  screen.classList.add('active');
 
   if (id === 'mapScreen') {
-    setTimeout(initMap, 300);
+    setTimeout(() => {
+      initMap();
+      map.invalidateSize();
+    }, 300);
   }
 }
 
@@ -25,7 +30,6 @@ function goToMap() {
 function initMap() {
   if (map) return;
 
-  // West Bengal center
   map = L.map('map').setView([23.685, 87.678], 7);
 
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -35,17 +39,21 @@ function initMap() {
   map.on('click', function (e) {
     if (step === 0) {
       if (pickupMarker) map.removeLayer(pickupMarker);
+
       pickupMarker = L.marker(e.latlng)
         .addTo(map)
         .bindPopup("📍 Pickup Location")
         .openPopup();
+
       step = 1;
     } else {
       if (dropMarker) map.removeLayer(dropMarker);
+
       dropMarker = L.marker(e.latlng)
         .addTo(map)
         .bindPopup("🏁 Drop Location")
         .openPopup();
+
       step = 0;
     }
   });
