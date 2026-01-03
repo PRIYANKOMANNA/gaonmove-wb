@@ -2,39 +2,114 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>GaonMove WB</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GaonMove WB – Village Transport 2026</title>
 
-  <!-- Leaflet -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5n/NmXm1A=" crossorigin="anonymous"/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="anonymous"></script>
 
   <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
 
+<!-- LOGIN -->
 <div class="screen active" id="loginScreen">
   <h1>GaonMove WB</h1>
-  <input placeholder="Mobile number"/>
-  <button onclick="goToRole()">Continue</button>
+  <p class="subtitle">Village-to-Village Transport</p>
+  <input id="mobile" type="tel" placeholder="10-digit mobile number" maxlength="10" inputmode="numeric"/>
+  <button id="continueBtn" disabled>Continue</button>
 </div>
 
+<!-- ROLE SELECTION -->
 <div class="screen" id="roleScreen">
-  <button onclick="goToMap()">🚚 Customer</button>
+  <h2>Select Your Role</h2>
+  <button data-role="customer">🚚 Customer</button>
+  <button data-role="transporter">🧑‍✈️ Transporter / Driver</button>
+  <button id="adminBtn">🧠 Admin (Debug)</button>
 </div>
 
+<!-- CUSTOMER – MAP + BOOKING -->
 <div class="screen" id="mapScreen">
-  <h2>Select Pickup → Drop</h2>
-  <div id="map"></div>
-  <p class="small" id="statusText">Tap map to select Pickup</p>
+  <h2 id="statusText">Select Pickup Location</h2>
+  <div id="map" class="map-container"></div>
+
+  <div class="form-row">
+    <label>Weight (kg)</label>
+    <input id="weight" type="number" min="1" value="10" step="5"/>
+  </div>
+
+  <div class="form-row">
+    <label>Preferred Vehicle</label>
+    <select id="vehicle">
+      <option value="bike">Bike (light, <30 kg)</option>
+      <option value="auto">Auto (small load)</option>
+      <option value="pickup" selected>Pickup Van (recommended)</option>
+      <option value="truck">Truck (heavy load)</option>
+    </select>
+  </div>
+
+  <button id="confirmBtn" disabled>Confirm & See Fare</button>
+  <button id="resetBtn">Reset Map</button>
 </div>
 
-<div class="screen" id="vehicleScreen">
+<!-- CUSTOMER – SUMMARY -->
+<div class="screen" id="summaryScreen">
   <h2>Trip Summary</h2>
-  <p id="summary"></p>
-  <div class="card">🚐 Pickup Van • Recommended</div>
+  <div id="summaryCard" class="card">
+    <p><strong>Booking ID:</strong> <span id="bookingId"></span></p>
+    <p><strong>Distance:</strong> <span id="distance"></span> km</p>
+    <p><strong>Vehicle:</strong> <span id="vehicleType"></span></p>
+    <p><strong>Weight:</strong> <span id="weightVal"></span> kg</p>
+    <p class="fare"><strong>Estimated Fare:</strong> <span id="fare"></span></p>
+  </div>
+  <button id="payBtn">Proceed to UPI Payment</button>
+  <button id="backBtn" class="secondary">Change</button>
 </div>
 
-<script src="script.js"></script>
+<!-- PAYMENT (DEMO) -->
+<div class="screen" id="paymentScreen">
+  <h2>Payment</h2>
+  <div class="upi-box">
+    <p>Scan to Pay (Demo Mode)</p>
+    <div class="qr-placeholder">UPI QR / ₹<span id="payAmount"></span></div>
+    <p class="small">Use any UPI app (PhonePe, Google Pay, etc.)</p>
+  </div>
+  <button id="paidBtn">I have Paid</button>
+  <button id="cancelPayBtn" class="secondary">Cancel</button>
+</div>
+
+<!-- TRANSPORTER MODE -->
+<div class="screen" id="transporterScreen">
+  <h2>Transporter Dashboard</h2>
+  <button id="goOnlineBtn">Go Online</button>
+  <div id="jobCard" class="card hidden">
+    <p><strong>New Booking!</strong></p>
+    <p id="jobDetails"></p>
+    <button id="acceptJobBtn">Accept Job</button>
+  </div>
+  <p class="small">Currently no new jobs (demo mode).</p>
+</div>
+
+<!-- ADMIN DASHBOARD -->
+<div class="screen" id="adminScreen">
+  <h2>Admin – All Bookings</h2>
+  <table id="adminTable">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Customer</th>
+        <th>Dist (km)</th>
+        <th>Vehicle</th>
+        <th>Fare</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
+
+<script type="module" src="script.js"></script>
 </body>
 </html>
