@@ -1,43 +1,289 @@
-body {
-  font-family: -apple-system, Arial;
-  background: #f4f6f8;
+/* ==========================================================================
+   GaonMove WB – Modern CSS (January 2026)
+   Mobile-first • Accessible • Maintainable
+   ========================================================================== */
+
+:root {
+  /* Colors */
+  --primary:        #0a3d62;
+  --primary-dark:   #072c48;
+  --primary-light:  #e6f0ff;
+  --success:        #28a745;
+  --danger:         #dc3545;
+  --gray-100:       #f8f9fa;
+  --gray-200:       #e9ecef;
+  --gray-500:       #6c757d;
+  --gray-900:       #212529;
+
+  /* Spacing */
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  --space-lg: 2rem;
+
+  /* Typography */
+  --font-base: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: ui-monospace, 'Cascadia Code', 'Segoe UI Mono', monospace;
+
+  /* Shadows & borders */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.12);
+  --radius-sm: 8px;
+  --radius-md: 12px;
 }
+
+/* ==========================================================================
+   Base & resets
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-base);
+  background: var(--gray-100);
+  color: var(--gray-900);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  line-height: 1.5;
+}
+
+/* ==========================================================================
+   Layout & Screens
+   ========================================================================== */
 
 .screen {
   display: none;
-  max-width: 420px;
-  margin: auto;
-  padding: 20px;
-  text-align: center;
+  min-height: 100vh;
+  padding: var(--space-md) var(--space-sm);
+  max-width: 520px;
+  margin: 0 auto;
 }
 
 .screen.active {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+header h1, header h2 {
+  margin: 0.4em 0;
+  text-align: center;
+  color: var(--gray-900);
+}
+
+.subtitle {
+  color: var(--gray-500);
+  text-align: center;
+  margin-top: -0.5rem;
+}
+
+/* ==========================================================================
+   Form elements
+   ========================================================================== */
+
+label {
   display: block;
+  font-weight: 600;
+  margin-bottom: var(--space-xs);
+  color: var(--gray-900);
+}
+
+input, select {
+  width: 100%;
+  padding: 14px;
+  font-size: 1.05rem;
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-sm);
+  background: white;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+input:focus, select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(10, 61, 98, 0.15);
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 button {
   width: 100%;
-  padding: 14px;
-  margin-top: 10px;
-  border-radius: 8px;
+  padding: 14px 16px;
+  font-size: 1.1rem;
+  font-weight: 600;
   border: none;
-  background: #0a3d62;
+  border-radius: var(--radius-md);
+  background: var(--primary);
   color: white;
+  cursor: pointer;
+  transition: all 0.15s ease;
 }
 
-#map {
-  height: 320px;
-  margin: 10px 0;
-  border-radius: 10px;
+button:hover:not(:disabled) {
+  background: var(--primary-dark);
+  transform: translateY(-1px);
 }
+
+button:disabled {
+  background: #d0d4d8;
+  color: #8a8f96;
+  cursor: not-allowed;
+}
+
+button.secondary {
+  background: transparent;
+  color: var(--primary);
+  border: 2px solid var(--primary);
+}
+
+button.danger {
+  background: var(--danger);
+}
+
+/* ==========================================================================
+   Map & visual containers
+   ========================================================================== */
+
+#map {
+  height: 360px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  background: #e5e7eb;
+  margin: var(--space-sm) 0;
+}
+
+/* Make map responsive – never too tall on small screens */
+@media (max-height: 700px) {
+  #map { height: 280px; }
+}
+
+/* ==========================================================================
+   Cards & summary
+   ========================================================================== */
 
 .card {
   background: white;
-  padding: 15px;
-  border-radius: 10px;
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  box-shadow: var(--shadow-md);
 }
 
-.small {
-  font-size: 13px;
-  color: #555;
+.fare-highlight {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin: var(--space-sm) 0;
+}
+
+/* ==========================================================================
+   UPI payment demo
+   ========================================================================== */
+
+.upi-box {
+  height: 220px;
+  background: linear-gradient(135deg, #f0f4f8 0%, #e0e7ff 100%);
+  border: 2px dashed var(--primary);
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  font-weight: 600;
+  color: var(--gray-700);
+}
+
+.qr-placeholder {
+  width: 140px;
+  height: 140px;
+  background: white;
+  border: 1px solid var(--gray-300);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  color: var(--gray-500);
+}
+
+/* ==========================================================================
+   Table (Admin)
+   ========================================================================== */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+th, td {
+  padding: 12px 14px;
+  text-align: center;
+  border-bottom: 1px solid var(--gray-200);
+}
+
+th {
+  background: var(--primary);
+  color: white;
+  font-weight: 600;
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+/* ==========================================================================
+   Utility classes
+   ========================================================================== */
+
+.hidden { display: none !important; }
+
+.text-center { text-align: center; }
+
+.small { font-size: 0.92rem; color: var(--gray-500); }
+
+.mt-auto { margin-top: auto; }
+
+/* ==========================================================================
+   Dark mode (optional – can be toggled later)
+   ========================================================================== */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --gray-100: #121212;
+    --gray-200: #1e1e1e;
+    --gray-500: #a0a0a0;
+    --gray-900: #e0e0e0;
+  }
+
+  body { background: #0d1117; color: #e0e0e0; }
+
+  .card, table, input, select {
+    background: #1e1e1e;
+    color: #e0e0e0;
+    border-color: #333;
+  }
+
+  .upi-box {
+    background: linear-gradient(135deg, #1e293b 0%, #111827 100%);
+    border-color: #4b5563;
+  }
 }
