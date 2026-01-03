@@ -4,6 +4,16 @@
   <meta charset="UTF-8" />
   <title>GaonMove WB</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Leaflet Map -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  />
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+  </script>
+
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -23,21 +33,21 @@
 <div class="screen" id="roleScreen">
   <h2>Continue as</h2>
 
-  <button onclick="goToBooking()">🚚 Customer</button>
+  <button onclick="goToMap()">🚚 Customer</button>
   <button class="secondary">🧑‍✈️ Transporter</button>
 </div>
 
-<!-- BOOKING SCREEN -->
-<div class="screen" id="bookingScreen">
-  <h2>Book Transport</h2>
+<!-- MAP SCREEN -->
+<div class="screen" id="mapScreen">
+  <h2>Select Pickup & Drop</h2>
 
-  <label>Pickup Location</label>
-  <input type="text" placeholder="Village / Block" />
+  <div id="map"></div>
 
-  <label>Drop Location</label>
-  <input type="text" placeholder="Town / District" />
+  <button onclick="confirmLocations()">Confirm Locations</button>
 
-  <button onclick="showVehicles()">See Available Vehicles</button>
+  <p class="small">
+    Tap once for Pickup, tap again for Drop
+  </p>
 </div>
 
 <!-- VEHICLE SCREEN -->
@@ -49,7 +59,7 @@
   <div class="card">🚐 Pickup Van • ₹1,100 • ETA 1.5 hr</div>
   <div class="card">🚚 407 Truck • ₹2,200 • ETA 3 hr</div>
 
-  <p class="small">Investor demo • Simulated availability</p>
+  <p class="small">Live map demo • Pricing simulated</p>
 </div>
 
 <script src="script.js"></script>
