@@ -2,94 +2,55 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>GaonMove WB – Rural Logistics Platform</title>
+  <title>GaonMove WB</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-<header>
+<!-- LOGIN SCREEN -->
+<div class="screen active" id="loginScreen">
   <h1>GaonMove WB</h1>
-  <p>Uber-style logistics for rural West Bengal</p>
-  <a href="#demo" class="btn">View Live Demo</a>
-</header>
+  <p>Rural logistics, on demand</p>
 
-<section class="problem">
-  <h2>The Problem</h2>
-  <ul>
-    <li>Rural Bengal has transporters, but no visibility</li>
-    <li>Customers waste time calling multiple drivers</li>
-    <li>No fixed pricing, tracking, or trust</li>
-    <li>Urban platforms ignore villages</li>
-  </ul>
-</section>
+  <input type="text" placeholder="Enter mobile number" />
+  <button onclick="goToRole()">Continue</button>
 
-<section class="solution">
-  <h2>Our Solution</h2>
-  <p>
-    GaonMove WB is a state-level logistics marketplace that connects
-    customers with nearby transporters — bikes, toto, pickup vans,
-    trucks, and bus cargo — just like Uber or Ola.
-  </p>
-</section>
+  <p class="small">Demo mode • No OTP required</p>
+</div>
 
-<section class="features">
-  <h2>Core Features</h2>
-  <div class="grid">
-    <div>📍 Location-based transporter discovery</div>
-    <div>🚚 Multiple vehicle options</div>
-    <div>💰 Transparent pricing</div>
-    <div>📦 OTP pickup & delivery</div>
-    <div>📸 Photo proof (POD)</div>
-    <div>⭐ Ratings & trust system</div>
-  </div>
-</section>
+<!-- ROLE SCREEN -->
+<div class="screen" id="roleScreen">
+  <h2>Continue as</h2>
 
-<section class="demo" id="demo">
-  <h2>Availability Demo (Investor Preview)</h2>
+  <button onclick="goToBooking()">🚚 Customer</button>
+  <button class="secondary">🧑‍✈️ Transporter</button>
+</div>
+
+<!-- BOOKING SCREEN -->
+<div class="screen" id="bookingScreen">
+  <h2>Book Transport</h2>
 
   <label>Pickup Location</label>
-  <input type="text" id="pickup" placeholder="Village / Block" />
+  <input type="text" placeholder="Village / Block" />
 
   <label>Drop Location</label>
-  <input type="text" id="drop" placeholder="District / Town" />
+  <input type="text" placeholder="Town / District" />
 
-  <button onclick="showAvailability()">Check Transporters</button>
+  <button onclick="showVehicles()">See Available Vehicles</button>
+</div>
 
-  <div id="result"></div>
-</section>
+<!-- VEHICLE SCREEN -->
+<div class="screen" id="vehicleScreen">
+  <h2>Available Near You</h2>
 
-<section class="market">
-  <h2>Market Opportunity</h2>
-  <p>
-    West Bengal has over <b>70% rural population</b>, thousands of
-    unorganised transporters, and zero rural-first logistics platforms.
-    Even 1 district can generate ₹1–2 lakh monthly revenue.
-  </p>
-</section>
+  <div class="card">🚲 Bike • ₹250 • ETA 30 min</div>
+  <div class="card">🛺 Toto / Auto • ₹450 • ETA 45 min</div>
+  <div class="card">🚐 Pickup Van • ₹1,100 • ETA 1.5 hr</div>
+  <div class="card">🚚 407 Truck • ₹2,200 • ETA 3 hr</div>
 
-<section class="model">
-  <h2>Business Model</h2>
-  <ul>
-    <li>8–12% commission per trip</li>
-    <li>Transporter subscriptions</li>
-    <li>B2B monthly logistics plans</li>
-    <li>Value-added services</li>
-  </ul>
-</section>
-
-<section class="ask">
-  <h2>Investment Ask</h2>
-  <p>
-    We are raising seed capital to build the full platform, onboard
-    transporters district-wise, and scale across West Bengal.
-  </p>
-  <p><b>Stage:</b> MVP / Pilot Ready</p>
-</section>
-
-<footer>
-  <p>© 2026 GaonMove WB | Rural Logistics, Reimagined</p>
-</footer>
+  <p class="small">Investor demo • Simulated availability</p>
+</div>
 
 <script src="script.js"></script>
 </body>
