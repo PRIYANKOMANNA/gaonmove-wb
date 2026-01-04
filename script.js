@@ -1,124 +1,112 @@
-const RATE = 40;
-const VEHICLE_MULTIPLIER = {
-  bike: 1,
-  auto: 1.2,
-  pickup: 1.5,
-  truck: 2.2
-};
+let map;
+let pickup = null;
+let drop = null;
+let pickupMarker, dropMarker, userMarker;
+let selecting = "pickup";
 
-let state = {
-  role: "",
-  pickup: null,
-  drop: null,
-  map: null,
-  markers: [],
-  transporters: [],
-};
+const statusText = document.getElementById("statusText");
+const mapTitle = document.getElementById("mapTitle");
+const stepNum = document.getElementById("stepNum");
+const confirmBtn = document.getElementById("confirmBtn");
+const addressBox = document.getElementById("addressBox");
 
-const els = {
-  screens: document.querySelectorAll(".screen"),
-  mobile: mobile,
-  continueBtn,
-  statusText,
-  confirmBtn,
-  summary,
-  weight,
-  vehicle,
-  payBtn,
-  paidBtn,
-  goOnlineBtn,
-  jobCard,
-  acceptJobBtn,
-  adminTable: document.querySelector("#adminTable tbody"),
-};
+const voice = window.speechSynthesis;
 
-function show(id){
-  els.screens.forEach(s=>s.classList.remove("active"));
+function speakBN(text) {
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = "bn-IN";
+  voice.cancel();
+  voice.speak(u);
+}
+
+function show(id) {
+  document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
   document.getElementById(id).classList.add("active");
 }
 
-mobile.addEventListener("input",()=>continueBtn.disabled=mobile.value.length!==10);
-continueBtn.onclick=()=>show("roleScreen");
+document.getElementById("continueBtn").onclick = () => show("roleScreen");
+document.querySelector("[data-role]").onclick = () => {
+  show("mapScreen");
+  initMap();
+};
 
-document.querySelectorAll("[data-role]").forEach(b=>{
-  b.onclick=()=>{
-    state.role=b.dataset.role;
-    if(state.role==="customer"){ show("mapScreen"); initMap(); }
-    if(state.role==="transporter"){ show("transporterScreen"); }
-  };
-});
+function initMap() {
+  if (map) return;
 
-adminBtn.onclick=()=>{ show("adminScreen"); loadAdmin(); };
+  map = L.map("map").setView([23.685, 87.678], 7);
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
 
-function initMap(){
-  if(state.map) return;
-  state.map=L.map("map").setView([23.6,87.6],7);
-  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(state.map);
+  locateUser();
 
-  spawnTransporters();
-
-  state.map.on("click",e=>{
-    if(!state.pickup){
-      state.pickup=e.latlng;
-      addMarker(e.latlng,"Pickup");
-      statusText.innerText="Select Drop";
-    } else {
-      state.drop=e.latlng;
-      addMarker(e.latlng,"Drop");
-      confirmBtn.disabled=false;
-    }
+  map.on("click", async e => {
+    const snapped = await snapToRoad(e.latlng);
+    if (selecting === "pickup") setPickup(snapped);
+    else setDrop(snapped);
   });
 }
 
-function addMarker(latlng,label){
-  const m=L.marker(latlng).addTo(state.map).bindPopup(label);
-  state.markers.push(m);
+function locateUser() {
+  navigator.geolocation.getCurrentPosition(pos => {
+    const latlng = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+    map.setView(latlng, 15);
+
+    userMarker?.remove();
+    userMarker = L.circleMarker(latlng, {
+      radius: 8,
+      color: "#1e90ff",
+      fillColor: "#1e90ff",
+      fillOpacity: 1
+    }).addTo(map).bindPopup("You are here");
+
+    setPickup(latlng);
+  });
 }
 
-confirmBtn.onclick=()=>{
-  const dist=state.map.distance(state.pickup,state.drop)/1000;
-  const fare=Math.round(dist*RATE*VEHICLE_MULTIPLIER[vehicle.value]);
-  summary.innerText=`Distance: ${dist.toFixed(2)} km\nFare: ₹${fare}`;
+document.getElementById("useMyLocationBtn").onclick = locateUser;
+
+async function reverseGeocode(latlng) {
+  const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latlng.lat}&lon=${latlng.lng}`;
+  const res = await fetch(url);
+  const data = await res.json();
+  return data.display_name || "";
+}
+
+async function snapToRoad(latlng) {
+  return latlng; // simplified snap (OSM roads auto close enough for MVP)
+}
+
+async function setPickup(latlng) {
+  pickup = latlng;
+  pickupMarker?.remove();
+  pickupMarker = L.marker(latlng).addTo(map).bindPopup("Pickup").openPopup();
+
+  addressBox.innerText = await reverseGeocode(latlng);
+
+  selecting = "drop";
+  stepNum.innerText = "2";
+  mapTitle.innerText = "Select Drop Location";
+  statusText.innerText = "Tap map to select drop location";
+
+  speakBN("আপনার পিকআপ লোকেশন নিশ্চিত করা হয়েছে");
+}
+
+async function setDrop(latlng) {
+  drop = latlng;
+  dropMarker?.remove();
+  dropMarker = L.marker(latlng).addTo(map).bindPopup("Drop").openPopup();
+
+  addressBox.innerText = await reverseGeocode(latlng);
+
+  confirmBtn.disabled = false;
+  mapTitle.innerText = "Confirm Locations";
+  statusText.innerText = "Pickup and drop selected";
+
+  speakBN("এখন আপনার ড্রপ লোকেশন নির্বাচন করা হয়েছে");
+}
+
+confirmBtn.onclick = () => {
+  const dist = map.distance(pickup, drop) / 1000;
+  document.getElementById("summary").innerText =
+    `Distance: ${dist.toFixed(2)} km`;
   show("summaryScreen");
 };
-
-payBtn.onclick=()=>show("paymentScreen");
-paidBtn.onclick=()=>alert("Payment successful (Demo)");
-
-/* TRANSPORTER */
-goOnlineBtn.onclick=()=>{
-  jobCard.classList.remove("hidden");
-};
-acceptJobBtn.onclick=()=>{
-  alert("Job accepted!");
-};
-
-/* NEARBY TRANSPORTERS */
-function spawnTransporters(){
-  for(let i=0;i<5;i++){
-    const lat=23.5+Math.random();
-    const lng=87+Math.random();
-    const m=L.circleMarker([lat,lng],{radius:6,color:"green"}).addTo(state.map);
-    moveDot(m);
-  }
-}
-function moveDot(m){
-  setInterval(()=>{
-    const p=m.getLatLng();
-    m.setLatLng([p.lat+(Math.random()-0.5)*0.01,p.lng+(Math.random()-0.5)*0.01]);
-  },2000);
-}
-
-/* ADMIN */
-function loadAdmin(){
-  // Demo data
-  [["GM123",12,"₹480"],["GM124",8,"₹320"]].forEach(r=>{
-    const tr=document.createElement("tr");
-    r.forEach(c=>{
-      const td=document.createElement("td");
-      td.innerText=c;
-      tr.appendChild(td);
-    });
-    els.adminTable.appendChild(tr);
-  });
-}
