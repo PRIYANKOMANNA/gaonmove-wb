@@ -1,12 +1,12 @@
 body {
   margin: 0;
   font-family: system-ui, sans-serif;
-  background: #f5f6f7;
+  background: #f4f6f8;
 }
 
 .screen {
   display: none;
-  padding: 20px;
+  padding: 16px;
   max-width: 480px;
   margin: auto;
 }
@@ -15,10 +15,11 @@ body {
   display: block;
 }
 
-input, select, button {
+button, input, select {
   width: 100%;
   padding: 12px;
   margin: 8px 0;
+  font-size: 1rem;
 }
 
 button {
@@ -28,34 +29,31 @@ button {
   border-radius: 8px;
 }
 
+#useMyLocationBtn {
+  background: #1e90ff;
+}
+
 #map {
   height: 320px;
-  margin: 10px 0;
   border-radius: 10px;
 }
 
-.card {
+.map-header {
   background: white;
-  padding: 15px;
+  padding: 12px;
   border-radius: 10px;
+  margin-bottom: 8px;
 }
 
-.hidden {
-  display: none;
+.step {
+  font-size: 0.75rem;
+  color: #666;
 }
 
-.upi-box {
-  height: 200px;
-  background: repeating-linear-gradient(
-    45deg,#ddd,#ddd 10px,#eee 10px,#eee 20px
-  );
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-}
-
-table {
-  width: 100%;
-  background: white;
+.address-box {
+  background: #fff;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  margin-top: 6px;
 }
