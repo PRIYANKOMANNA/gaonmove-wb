@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>GaonMove WB</title>
 
-  <!-- Leaflet -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
@@ -13,24 +12,28 @@
 </head>
 <body>
 
-<!-- LOGIN -->
 <div class="screen active" id="loginScreen">
   <h1>GaonMove WB</h1>
   <input id="mobile" placeholder="10-digit mobile"/>
   <button id="continueBtn" disabled>Continue</button>
 </div>
 
-<!-- ROLE -->
 <div class="screen" id="roleScreen">
   <button data-role="customer">🚚 Customer</button>
-  <button data-role="transporter">🧑‍✈️ Transporter</button>
-  <button id="adminBtn">🧠 Admin</button>
 </div>
 
-<!-- MAP -->
 <div class="screen" id="mapScreen">
-  <h2 id="statusText">Select Pickup</h2>
+  <div class="map-header">
+    <div class="step">STEP <span id="stepNum">1</span> of 2</div>
+    <h2 id="mapTitle">Confirm Pickup Location</h2>
+    <p id="statusText">Use your current location or tap map</p>
+  </div>
+
+  <button id="useMyLocationBtn">📍 Use My Location</button>
+
   <div id="map"></div>
+
+  <div class="address-box" id="addressBox"></div>
 
   <label>Weight (kg)</label>
   <input id="weight" type="number" value="5"/>
@@ -46,43 +49,11 @@
   <button id="confirmBtn" disabled>Confirm</button>
 </div>
 
-<!-- SUMMARY -->
 <div class="screen" id="summaryScreen">
   <h2>Trip Summary</h2>
   <p id="summary"></p>
-  <button id="payBtn">Pay via UPI</button>
 </div>
 
-<!-- PAYMENT -->
-<div class="screen" id="paymentScreen">
-  <h2>UPI Payment</h2>
-  <div class="upi-box">Scan to Pay (Demo)</div>
-  <button id="paidBtn">Payment Done</button>
-</div>
-
-<!-- TRANSPORTER -->
-<div class="screen" id="transporterScreen">
-  <h2>Transporter Mode</h2>
-  <button id="goOnlineBtn">Go Online</button>
-  <div id="jobCard" class="card hidden">
-    <p>New Job Available</p>
-    <button id="acceptJobBtn">Accept</button>
-  </div>
-</div>
-
-<!-- ADMIN -->
-<div class="screen" id="adminScreen">
-  <h2>Admin Dashboard</h2>
-  <table id="adminTable">
-    <thead>
-      <tr>
-        <th>Booking</th><th>Distance</th><th>Fare</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-</div>
-
-<script type="module" src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
