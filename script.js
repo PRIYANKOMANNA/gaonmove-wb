@@ -1,17 +1,33 @@
 /* =========================================
-   GaonMove WB – Stable JS with Location Fix
+   GaonMove WB – Pickup → Drop Flow (FINAL)
    ========================================= */
 
 let map;
+let pickup = null;
+let drop = null;
 let pickupMarker = null;
-let userMarker = null;
+let dropMarker = null;
+let routeLine = null;
+
+let stage = "pickup"; // pickup | drop
 
 /* ---------- DOM ---------- */
 const screens = document.querySelectorAll(".screen");
+
 const mobileInput = document.getElementById("mobile");
 const continueBtn = document.getElementById("continueBtn");
-const useMyLocationBtn = document.getElementById("useMyLocationBtn");
+
 const statusText = document.getElementById("statusText");
+const mapTitle = document.getElementById("mapTitle");
+const stepNum = document.getElementById("stepNum");
+
+const useMyLocationBtn = document.getElementById("useMyLocationBtn");
+const confirmBtn = document.getElementById("confirmBtn");
+
+const weightInput = document.getElementById("weight");
+const vehicleSelect = document.getElementById("vehicle");
+
+const summaryText = document.getElementById("summary");
 
 /* ---------- SCREEN NAV ---------- */
 function showScreen(id) {
@@ -53,59 +69,100 @@ function initMap() {
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     attribution: "© OpenStreetMap"
   }).addTo(map);
+
+  map.on("click", onMapClick);
 }
 
-/* ---------- USE MY LOCATION (FIXED) ---------- */
+/* ---------- USE MY LOCATION ---------- */
 useMyLocationBtn.addEventListener("click", () => {
   statusText.innerText = "Detecting your location…";
 
-  if (!navigator.geolocation) {
-    statusText.innerText = "Location not supported on this device";
-    return;
-  }
-
   navigator.geolocation.getCurrentPosition(
     pos => {
-      const lat = pos.coords.latitude;
-      const lng = pos.coords.longitude;
-      const latlng = [lat, lng];
-
+      const latlng = [pos.coords.latitude, pos.coords.longitude];
       map.setView(latlng, 15);
 
-      // User location dot
-      if (userMarker) map.removeLayer(userMarker);
-      userMarker = L.circleMarker(latlng, {
-        radius: 8,
-        color: "#1e90ff",
-        fillColor: "#1e90ff",
-        fillOpacity: 1
-      }).addTo(map).bindPopup("You are here").openPopup();
-
-      // Pickup marker
       if (pickupMarker) map.removeLayer(pickupMarker);
+      pickup = latlng;
+
       pickupMarker = L.marker(latlng)
         .addTo(map)
         .bindPopup("Pickup location")
         .openPopup();
 
-      statusText.innerText = "Pickup set to your current location";
+      stage = "drop";
+      stepNum.innerText = "2";
+      mapTitle.innerText = "Select Drop Location";
+      statusText.innerText = "Now tap map to select drop location";
 
-      // Safari rendering fix
-      setTimeout(() => map.invalidateSize(), 300);
+      confirmBtn.disabled = true;
     },
-    err => {
-      if (err.code === 1) {
-        statusText.innerText = "Location permission denied";
-      } else {
-        statusText.innerText = "Unable to detect location";
-      }
+    () => {
+      statusText.innerText = "Unable to detect location";
     },
-    {
-      enableHighAccuracy: true,
-      timeout: 10000,
-      maximumAge: 0
-    }
+    { enableHighAccuracy: true }
   );
+});
+
+/* ---------- MAP CLICK ---------- */
+function onMapClick(e) {
+  if (stage !== "drop") return;
+
+  const latlng = [e.latlng.lat, e.latlng.lng];
+  drop = latlng;
+
+  if (dropMarker) map.removeLayer(dropMarker);
+  dropMarker = L.marker(latlng)
+    .addTo(map)
+    .bindPopup("Drop location")
+    .openPopup();
+
+  drawRoute();
+  confirmBtn.disabled = false;
+
+  statusText.innerText = "Drop selected. Confirm to continue";
+}
+
+/* ---------- ROUTE + CALC ---------- */
+function drawRoute() {
+  if (routeLine) map.removeLayer(routeLine);
+
+  routeLine = L.polyline([pickup, drop], {
+    color: "#0a3d62",
+    weight: 4
+  }).addTo(map);
+
+  map.fitBounds(routeLine.getBounds(), { padding: [30, 30] });
+}
+
+/* ---------- CONFIRM ---------- */
+confirmBtn.addEventListener("click", () => {
+  if (!pickup || !drop) return;
+
+  const distanceKm = map.distance(pickup, drop) / 1000;
+
+  const ratePerKm = 40;
+  const vehicleMultiplier = {
+    bike: 1,
+    auto: 1.3,
+    pickup: 1.6,
+    truck: 2.2
+  };
+
+  const vehicle = vehicleSelect.value;
+  const weight = parseFloat(weightInput.value) || 1;
+
+  let fare = distanceKm * ratePerKm * vehicleMultiplier[vehicle];
+  if (weight > 20) fare += 50;
+
+  fare = Math.round(fare);
+
+  summaryText.innerText =
+    `Distance: ${distanceKm.toFixed(2)} km\n` +
+    `Vehicle: ${vehicle}\n` +
+    `Estimated Fare: ₹${fare}`;
+
+  showScreen("summaryScreen");
 });
 
 /* ---------- INIT ---------- */
