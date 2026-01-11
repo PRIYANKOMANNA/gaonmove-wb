@@ -1,59 +1,159 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>GaonMove WB</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>শ্রীশ্রী সরস্বতী পূজা ২০২৬</title>
 
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css"/>
+<style>
+body{font-family:'Hind Siliguri',sans-serif;background:#fffdf6;margin:0;color:#333}
+header{text-align:center;padding:40px 20px;background:#fff3b0}
+header h1{margin:0;font-size:32px}
+header h2{margin:10px 0}
+section{max-width:900px;margin:auto;padding:20px}
+.card{background:#fff;padding:25px;border-radius:12px;margin-bottom:25px;box-shadow:0 4px 10px rgba(0,0,0,.08)}
+h3{border-left:6px solid #e2c75f;padding-left:10px;color:#6b5600}
+.highlight{background:#fff3b0;padding:15px;font-weight:600;margin:15px 0}
+button{background:#e2c75f;border:none;padding:12px 20px;font-size:16px;border-radius:8px;cursor:pointer}
+.gallery img{width:100%;border-radius:10px;margin-bottom:10px}
+footer{text-align:center;padding:20px;background:#f5e39c}
+a{text-decoration:none;color:#333}
+</style>
 </head>
+
 <body>
 
-<div class="screen active" id="loginScreen">
-  <h1>GaonMove WB</h1>
-  <input id="mobile" placeholder="10-digit mobile"/>
-  <button id="continueBtn" disabled>Continue</button>
+<header>
+<h1>🌼 শুভ বসন্ত পঞ্চমী 🌼</h1>
+<h2>শ্রীশ্রী সরস্বতী পূজা ২০২৬</h2>
+
+<a href="https://wa.me/?text=🙏%20শ্রীশ্রী%20সরস্বতী%20পূজা%২০২০২৬%0Aচাঁদা%20ও%20স্বচ্ছ%20তথ্য:%0Ahttps://yourusername.github.io/saraswati-puja-2026/" target="_blank">
+<button>📲 WhatsApp-এ শেয়ার করুন</button>
+</a>
+</header>
+
+<section>
+
+<!-- Invitation -->
+<div class="card">
+<h3>🙏 পূজার আমন্ত্রণ</h3>
+<p>
+মা সরস্বতীর আশীর্বাদে আপনাদের সান্নিধ্যে
+শ্রীশ্রী সরস্বতী পূজা ২০২৬ উদযাপন করতে আমরা আনন্দিত।
+</p>
+<p>
+📅 তারিখ: ………<br>
+⏰ সময়: ………<br>
+📍 স্থান: ………
+</p>
 </div>
 
-<div class="screen" id="roleScreen">
-  <button data-role="customer">🚚 Customer</button>
+<!-- Notice -->
+<div class="card">
+<h3>📜 মিটিং ও চাঁদা সংক্রান্ত বিজ্ঞপ্তি</h3>
+
+<ul>
+<li>পূজার আয়োজন ও ব্যবস্থাপনা</li>
+<li>প্রসাদ ও ভোগ</li>
+<li>সাজসজ্জা ও আলোকসজ্জা</li>
+<li>চাঁদা সংগ্রহ ও দায়িত্ব বণ্টন</li>
+</ul>
+
+<div class="highlight">
+👉 মোট আনুমানিক খরচ: প্রায় ₹৩১,০০০/-
 </div>
 
-<div class="screen" id="mapScreen">
-  <div class="map-header">
-    <div class="step">STEP <span id="stepNum">1</span> of 2</div>
-    <h2 id="mapTitle">Confirm Pickup Location</h2>
-    <p id="statusText">Use your current location or tap map</p>
-  </div>
-
-  <button id="useMyLocationBtn">📍 Use My Location</button>
-
-  <div id="map"></div>
-
-  <div class="address-box" id="addressBox"></div>
-
-  <label>Weight (kg)</label>
-  <input id="weight" type="number" value="5"/>
-
-  <label>Vehicle</label>
-  <select id="vehicle">
-    <option value="bike">Bike</option>
-    <option value="auto">Auto</option>
-    <option value="pickup" selected>Pickup Van</option>
-    <option value="truck">Truck</option>
-  </select>
-
-  <button id="confirmBtn" disabled>Confirm</button>
+<p>
+ন্যূনতম চাঁদা: <strong>₹৫০০/-</strong><br>
+কিছু সদস্য স্বেচ্ছায় অতিরিক্ত অর্থ ও দায়িত্ব গ্রহণ করেছেন—
+বিষয়টি সকলের অবগতির জন্য।
+</p>
 </div>
 
-<div class="screen" id="summaryScreen">
-  <h2>Trip Summary</h2>
-  <p id="summary"></p>
+<!-- Online Donation -->
+<div class="card">
+<h3>💳 Online Chanda</h3>
+
+<img src="upi-qr.png" alt="UPI QR Code" style="max-width:250px"><br><br>
+
+<a href="upi://pay?pa=YOURUPI@bank&pn=Puja%20Committee&am=500&cu=INR">
+<button>₹500 UPI দিয়ে চাঁদা দিন</button>
+</a>
+
+<p>UPI দেওয়ার পর নিচের ফর্মটি পূরণ করুন।</p>
+
+<a href="YOUR_GOOGLE_FORM_LINK" target="_blank">
+<button>✍️ Donation Form</button>
+</a>
 </div>
 
-<script src="script.js"></script>
+<!-- Live Counter -->
+<div class="card">
+<h3>📊 এখন পর্যন্ত সংগৃহীত চাঁদা</h3>
+<h2 id="total">লোড হচ্ছে...</h2>
+</div>
+
+<!-- Blockchain Transparency -->
+<div class="card">
+<h3>🔐 Blockchain Transparency</h3>
+
+<p>
+স্বচ্ছতা বজায় রাখার জন্য,
+ডোনেশনের সারসংক্ষেপের <strong>hash</strong>
+Public Blockchain-এ সংরক্ষণ করা হয়।
+</p>
+
+<p>
+🔗 সর্বশেষ Blockchain Proof:
+<br>
+<a href="https://etherscan.io/tx/YOUR_TRANSACTION_HASH" target="_blank">
+View on Blockchain Explorer
+</a>
+</p>
+
+<p style="font-size:14px;">
+এই তথ্য একবার Blockchain-এ গেলে
+পরবর্তীতে পরিবর্তন করা সম্ভব নয়।
+</p>
+</div>
+
+<!-- Gallery -->
+<div class="card">
+<h3>🖼️ Gallery</h3>
+<div class="gallery">
+<img src="img1.jpg">
+<img src="img2.jpg">
+</div>
+</div>
+
+<!-- Committee -->
+<div class="card">
+<h3>👥 পূজা কমিটি</h3>
+<ul>
+<li>সভাপতি – ………</li>
+<li>সম্পাদক – ………</li>
+<li>কোষাধ্যক্ষ – ………</li>
+<li>সদস্যবৃন্দ</li>
+</ul>
+</div>
+
+</section>
+
+<footer>
+© 2026 শ্রীশ্রী সরস্বতী পূজা কমিটি | Transparent • Community • Trust
+</footer>
+
+<!-- Live Counter Script -->
+<script>
+fetch("https://opensheet.elk.sh/YOUR_SHEET_ID/Sheet1")
+.then(res => res.json())
+.then(data => {
+  let total = data[0]["Total"];
+  document.getElementById("total").innerText = "₹ " + total;
+});
+</script>
+
 </body>
 </html>
