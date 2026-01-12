@@ -147,16 +147,36 @@ Blockchain-এ সংরক্ষিত তথ্য একবার যুক�
 </section>
 
 <footer>
-© 2026 শ্রীশ্রী সরস্বতী পূজা কমিটি<br>
+© 14 No শ্রীশ্রী সরস্বতী পূজা কমিটি<br>
 Transparency • Community • Trust
 </footer>
-
 <script>
-fetch("https://opensheet.elk.sh/YOUR_SHEET_ID/Sheet1")
+// TOTAL AMOUNT
+fetch("https://docs.google.com/spreadsheets/d/1Ay-lnP_rXLiQhkQBYnBWrOPqiHgdRRnlLOZUkFZy2xU/edit?usp=drivesdk/Public")
 .then(res => res.json())
-.then(data => {
-  let total = data[0]["Total"];
-  document.getElementById("total").innerText = "₹ " + total;
+.then(rows => {
+  let sum = 0;
+  let table = "";
+  rows.forEach(r => {
+    if(r.Name && r.Amount){
+      let amt = parseFloat(r.Amount);
+      if(!isNaN(amt)) sum += amt;
+      table += `
+        <tr>
+          <td>${r.Name}</td>
+          <td>₹ ${r.Amount}</td>
+          <td>${r.Date || ""}</td>
+        </tr>
+      `;
+    }
+  });
+  document.getElementById("total").innerText = "₹ " + sum;
+  document.getElementById("donorTable").innerHTML = table;
+})
+.catch(()=>{
+  document.getElementById("total").innerText = "ডাটা লোড হয়নি";
+  document.getElementById("donorTable").innerHTML =
+    "<tr><td colspan='3'>ডাটা লোড হয়নি</td></tr>";
 });
 </script>
 
