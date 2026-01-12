@@ -147,10 +147,9 @@ Blockchain-এ সংরক্ষিত তথ্য একবার যুক�
 © 14 No শ্রীশ্রী সরস্বতী পূজা কমিটি<br>
 Transparency • Community • Trust
 </footer>
-
 <script>
 fetch("https://opensheet.elk.sh/1Ay-lnP_rXLiQhkQBYnBWrOPqiHgdRRnlLOZUkFZy2xU/Public")
-  .then(response => response.json())
+  .then(res => res.json())
   .then(data => {
     let total = 0;
     let rows = "";
@@ -171,8 +170,7 @@ fetch("https://opensheet.elk.sh/1Ay-lnP_rXLiQhkQBYnBWrOPqiHgdRRnlLOZUkFZy2xU/Pub
     });
 
     document.getElementById("total").innerText = "₹ " + total;
-    document.getElementById("donorTable").innerHTML = rows || 
-      "<tr><td colspan='3'>কোনো ডাটা নেই</td></tr>";
+    document.getElementById("donorTable").innerHTML = rows;
   })
   .catch(err => {
     console.error(err);
