@@ -1,24 +1,186 @@
 <!DOCTYPE html>
-<html>
+<html lang="bn">
 <head>
-  <meta charset="UTF-8">
-  <title>Test Sheet</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>শ্রীশ্রী সরস্বতী পূজা ২০২৬</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+body{font-family:'Hind Siliguri',sans-serif;background:#fffdf6;margin:0;color:#333}
+header{text-align:center;padding:40px 20px;background:#fff3b0}
+header h1{margin:0;font-size:32px}
+header h2{margin:10px 0}
+section{max-width:900px;margin:auto;padding:20px}
+.card{background:#fff;padding:25px;border-radius:14px;margin-bottom:25px;box-shadow:0 4px 12px rgba(0,0,0,.08)}
+h3{border-left:6px solid #e2c75f;padding-left:10px;color:#6b5600}
+.highlight{background:#fff3b0;padding:15px;font-weight:600;margin:15px 0;border-radius:10px}
+button{background:#e2c75f;border:none;padding:12px 20px;font-size:16px;border-radius:8px;cursor:pointer}
+button:hover{opacity:.9}
+footer{text-align:center;padding:20px;background:#f5e39c;font-size:14px}
+a{text-decoration:none;color:#333}
+.small{font-size:14px;color:#555}
+.center{text-align:center}
+table{width:100%;border-collapse:collapse}
+th,td{border:1px solid #ddd;padding:8px;text-align:center}
+th{background:#fff3b0}
+</style>
 </head>
+
 <body>
 
-<h1>Donation Test</h1>
-<div id="out">Loading...</div>
+<header>
+<h1>🌼 শুভ বসন্ত পঞ্চমী 🌼</h1>
+<h2>শ্রীশ্রী সরস্বতী পূজা ২০২৬</h2>
 
+<a href="https://wa.me/?text=🙏%20শ্রীশ্রী%20সরস্বতী%20পূজা%২০২০২৬%0Aচাঁদা%20ও%20স্বচ্ছ%20তথ্য:%0Ahttps://priyankomanna.github.io/gaonmove-wb/" target="_blank">
+<button>📲 WhatsApp-এ শেয়ার করুন</button>
+</a>
+</header>
+
+<!-- Saraswati Image -->
+<section class="center">
+  <img src="saraswati.jpg" alt="Maa Saraswati"
+       style="max-width:700px;width:100%;border-radius:18px;
+              box-shadow:0 8px 22px rgba(0,0,0,0.18);">
+  <p style="margin-top:10px;font-weight:600;color:#6b5600;">
+    বিদ্যার দেবী মা সরস্বতীর চরণে প্রণাম 🙏
+  </p>
+</section>
+
+<section>
+
+<!-- Invitation -->
+<div class="card">
+<h3>🙏 পূজার আমন্ত্রণ</h3>
+<p>
+মা সরস্বতীর আশীর্বাদে আপনাদের সান্নিধ্যে  
+শ্রীশ্রী সরস্বতী পূজা ২০২৬  
+উদযাপন করতে আমরা আনন্দিত।
+</p>
+<p>
+📅 তারিখ: ………<br>
+⏰ সময়: ………<br>
+📍 স্থান: ………
+</p>
+</div>
+
+<!-- Notice -->
+<div class="card">
+<h3>📜 মিটিং ও চাঁদা সংক্রান্ত বিজ্ঞপ্তি</h3>
+<div class="highlight">👉 মোট আনুমানিক খরচ: প্রায় ₹৩১,০০০/-</div>
+<p>
+ন্যূনতম চাঁদা: <strong>₹৫০০/-</strong><br>
+সামর্থ্য অনুযায়ী অতিরিক্ত সহযোগিতা সাদরে গ্রহণযোগ্য।
+</p>
+</div>
+
+<!-- Online Donation -->
+<div class="card center">
+<h3>💳 Online Chanda (UPI)</h3>
+
+<img src="upi-qr.png" alt="UPI QR Code" style="max-width:260px"><br><br>
+
+<a href="upi://pay?pa=rounakadhikary57@oksbi&pn=Rounak%20Adhikary&am=500&cu=INR">
+<button>₹500 UPI দিয়ে চাঁদা দিন</button>
+</a>
+
+<p class="small">
+UPI দেওয়ার পর নিচের ফর্মটি পূরণ করুন।
+</p>
+
+<a href="https://forms.gle/oSbbyYxp3FcqXbUHA" target="_blank">
+<button>✍️ Donation Confirmation Form</button>
+</a>
+</div>
+
+<!-- Live Total -->
+<div class="card center">
+<h3>📊 মোট সংগৃহীত চাঁদা</h3>
+<h1 id="total">লোড হচ্ছে...</h1>
+</div>
+
+<!-- Public Donor List -->
+<div class="card">
+<h3>📜 দাতা তালিকা (Public)</h3>
+<table>
+<thead>
+<tr>
+<th>নাম</th>
+<th>পরিমাণ (₹)</th>
+<th>তারিখ</th>
+</tr>
+</thead>
+<tbody id="donorTable">
+<tr><td colspan="3">লোড হচ্ছে...</td></tr>
+</tbody>
+</table>
+<p class="small">
+স্বচ্ছতার জন্য এই তালিকা সর্বসাধারণের জন্য উন্মুক্ত।
+</p>
+</div>
+
+</section>
+
+<footer>
+© 2026 শ্রীশ্রী সরস্বতী পূজা কমিটি<br>
+Transparency • Community • Trust
+</footer>
+
+<!-- =========================
+     DATA-WISE FLEXIBLE SCRIPT
+     ========================= -->
 <script>
 fetch("https://opensheet.elk.sh/1Ay-lnP_rXLiQhkQBYnBWrOPqiHgdRRnlLOZUkFZy2xU/Public")
-.then(r => r.json())
-.then(d => {
-  document.getElementById("out").innerHTML =
-    "<pre>" + JSON.stringify(d, null, 2) + "</pre>";
+.then(res => res.json())
+.then(rows => {
+  let sum = 0;
+  let table = "";
+
+  rows.forEach(r => {
+    // Flexible name detection
+    let name =
+      r.Name ||
+      r.name ||
+      r["Donor Name"] ||
+      r["NAME"] ||
+      "Anonymous";
+
+    // Flexible amount detection (₹, text, any header)
+    let amount =
+      r.Amount ||
+      r.amount ||
+      r["Amount (₹)"] ||
+      r["Amount ₹"] ||
+      r["Donation"] ||
+      r["DONATION"] ||
+      r["Amount Rs"];
+
+    if (amount) {
+      let amt = parseFloat(String(amount).replace(/[^\d.]/g, ""));
+      if (!isNaN(amt)) {
+        sum += amt;
+        table += `
+          <tr>
+            <td>${name}</td>
+            <td>₹ ${amt}</td>
+            <td>${r.Date || r.date || ""}</td>
+          </tr>
+        `;
+      }
+    }
+  });
+
+  document.getElementById("total").innerText = "₹ " + sum;
+  document.getElementById("donorTable").innerHTML =
+    table || "<tr><td colspan='3'>এখনও কোনো ডাটা নেই</td></tr>";
 })
-.catch(e => {
-  document.getElementById("out").innerText = "ERROR";
-  console.error(e);
+.catch(err => {
+  console.error(err);
+  document.getElementById("total").innerText = "ডাটা লোড হয়নি";
+  document.getElementById("donorTable").innerHTML =
+    "<tr><td colspan='3'>ডাটা লোড হয়নি</td></tr>";
 });
 </script>
 
